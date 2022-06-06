@@ -3,8 +3,8 @@ import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components/macro";
 import LoginPage from "../Account/Login/LoginPage";
-import SignUpPage from "../Account/SignUp/SignUpPage";
 import SearchPage from "../Pages/SearchPage";
+import SignUpPage from "../Account/SignUp/SignUpPage";
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
