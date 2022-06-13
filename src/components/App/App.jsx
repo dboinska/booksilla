@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="/book" element={<SearchPage />} />
           <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
@@ -30,6 +30,11 @@ export const GlobalStyles = createGlobalStyle`
     --white-gray: #fafaf8;
     --white: #fff;
     --gray: #bfbf94;
+    --purple: #8800ff;
+    --light-purple: #b67fe7;
+    --violet: #aa28c3;
+    --berry: #a10202;
+    --light-brown: #8a6437;
     --brown: #704816;
     --black: #000;
 
@@ -53,15 +58,18 @@ export const GlobalStyles = createGlobalStyle`
   --brown-gradient: linear-gradient(
   180deg,
   hsl(33deg 67% 26%) 0%,
-  hsl(32deg 46% 35%) 26%,
-  hsl(31deg 33% 44%) 48%,
-  hsl(30deg 27% 53%) 66%,
-  hsl(29deg 28% 62%) 78%,
-  hsl(29deg 29% 72%) 87%,
-  hsl(28deg 30% 81%) 93%,
-  hsl(28deg 31% 90%) 97%,
-  hsl(0deg 0% 100%) 100%
+  hsl(35deg 48% 33%) 29%,
+  hsl(37deg 35% 40%) 44%,
+  hsl(38deg 26% 48%) 55%,
+  hsl(41deg 23% 55%) 64%,
+  hsl(43deg 22% 63%) 72%,
+  hsl(46deg 21% 71%) 79%,
+  hsl(50deg 20% 80%) 86%,
+  hsl(54deg 18% 88%) 93%,
+  hsl(60deg 17% 98%) 100%
 );
+
+--shadow: 6px 6px 25px -12px rgba(66, 68, 90, 1);
   }
   body {
         margin: 0;
@@ -69,6 +77,7 @@ export const GlobalStyles = createGlobalStyle`
         
         font-family: "Pacifico", cursive;
         box-sizing: border-box;
+        background-color: var(--white-gray);
     }
 
     code {
