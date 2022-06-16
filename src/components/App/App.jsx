@@ -5,6 +5,7 @@ import { createGlobalStyle } from "styled-components/macro";
 import LoginPage from "../Account/Login/LoginPage";
 import SearchPage from "../Pages/SearchPage";
 import SignUpPage from "../Account/SignUp/SignUpPage";
+import SingleBook from "../Pages/SingleBook";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/book" element={<SearchPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="book/:id" element={<SingleBook />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
