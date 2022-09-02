@@ -23,9 +23,6 @@ const LoginPage = () => {
       </Link>
     </>
   );
-  const theme = {
-    main: "calc(100vh - 2.4rem)",
-  };
   const img = <img className="pages" src={pages} width="200" alt="logo img" />;
   return (
     <StartPage
@@ -35,7 +32,6 @@ const LoginPage = () => {
       form={formLogin}
       formGoogle=""
       option={optionLogin}
-      theme={theme}
       img={img}
     />
   );

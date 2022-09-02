@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components/macro";
-import Links from "./Links";
+import { TiBookmark, TiChevronLeft } from "react-icons/ti";
+import { IoBookmark, IoShareSocialSharp } from "react-icons/io5";
+
+import { GrLanguage, GrDocumentDownload } from "react-icons/gr";
+import Meta, { MetaGroup } from "../Meta";
 
 const SingleBook = () => {
   const API_URL = `https://gutendex.com/books/`;
@@ -18,6 +22,7 @@ const SingleBook = () => {
       const [author] = result.data.authors;
       const subjects = result.data.subjects;
       const languages = result.data.languages;
+      const downloads = result.data.download_count;
       console.log(title);
       console.log(subjects);
       const img = result.data.formats["image/jpeg"];
@@ -32,6 +37,7 @@ const SingleBook = () => {
         author: author.name,
         subjects,
         languages,
+        downloads,
         fileHtml,
         fileEpub,
         fileRdf,
@@ -41,49 +47,111 @@ const SingleBook = () => {
     };
 
     choosenBook();
-  }, []);
+  });
 
   return (
     <>
       <Main>
         <BookContainer>
+          <Navigation>
+            <Icon>
+              <TiChevronLeft />
+            </Icon>
+            <SpanLogo>-booksilla-</SpanLogo>
+            <Icon>
+              <IoBookmark />
+            </Icon>
+            <Icon>
+              <IoShareSocialSharp />
+            </Icon>
+          </Navigation>
+
+          <ImgContainer>
+            <img src={book.img} alt="img"></img>
+          </ImgContainer>
           <div>
             <h1>{book.title}</h1>
             <h2>{book.author}</h2>
           </div>
-          <Container>
-            <div>
-              <h3>
-                Languages: <span>{book.languages}</span>
-              </h3>
-              <h3>Categories: </h3>
-              {book.subjects?.map((subject) => (
-                <p key={subject} className="subjects">
-                  {subject}
-                </p>
-              ))}
-            </div>
-            <div>
-              <ImgContainer>
-                <img src={book.img} alt="img"></img>
-              </ImgContainer>
-              <Links />
-            </div>
-          </Container>
+          <DivContainer>
+            <Meta desc="pages">404</Meta>
+            <Meta desc="hours">5-7</Meta>
+            <Meta desc="rating">5.0</Meta>
+          </DivContainer>
+
+          <div>
+            <h3>About book</h3>
+            <p>
+              Ut tristique mauris elit, vitae mattis neque elementum non.
+              Quisque vitae bibendum mi. Donec auctor, lectus quis aliquam
+              consectetur, nulla odio sodales dolor, pretium convallis purus
+              felis euismod est. Phasellus mollis nibh id nibh pharetra
+              ultrices. Quisque id ornare diam. Suspendisse potenti. Maecenas
+              tristique diam vel libero fermentum tincidunt. Fusce aliquam
+              viverra velit, a commodo lacus tincidunt ultricies. Nunc mattis,
+              tortor quis luctus bibendum, risus nunc vestibulum ipsum, eget
+              fermentum turpis ante vel metus.
+            </p>
+            <MetaGroup>
+              <Meta small>
+                <span>
+                  <GrLanguage />
+                </span>
+                {book.languages}
+              </Meta>
+              <Meta small>
+                <span>
+                  <GrDocumentDownload />
+                </span>
+                {book.downloads} times
+              </Meta>
+            </MetaGroup>
+
+            <h4>Categories: </h4>
+            {book.subjects?.map((subject) => (
+              <p key={subject} className="subjects">
+                {subject}
+              </p>
+            ))}
+          </div>
+
           <DivCenter>
-            <h3>Available formats:</h3>
-            <DownloadContainer>
-              <a href={book.fileHtml}>html</a>
-              <a href={book.fileEpub}>epub</a>
-              <a href={book.fileMobipocket}>mobi</a>
-              <a href={book.fileRdf}>rdf</a>
-            </DownloadContainer>
+            <h4>Available formats:</h4>
+            <BadgesContainer>
+              <Badge href={book.fileHtml}>html</Badge>
+              <Badge href={book.fileEpub}>epub</Badge>
+              <Badge href={book.fileMobipocket}>mobi</Badge>
+              <Badge href={book.fileRdf}>rdf</Badge>
+            </BadgesContainer>
           </DivCenter>
         </BookContainer>
       </Main>
     </>
   );
 };
+
+const DivContainer = styled.div`
+  display: flex;
+  flex-direction: ${(props) => (props.column ? "column" : "row")};
+  width: 100%;
+  justify-content: space-evenly;
+  text-align: center;
+  margin: 0 auto;
+
+  @media screen and (min-width: 567px) {
+    width: 50%;
+  }
+`;
+
+const SpanLogo = styled.div`
+  font-size: 1.2rem;
+  margin: 0 auto;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  font-family: "Pacifico", cursive; ;
+`;
+
 const Main = styled.main`
   background-color: var(--white-gray);
   height: calc(100vh - 6rem);
@@ -93,7 +161,6 @@ const Main = styled.main`
 const BookContainer = styled.div`
   margin: 1rem;
   padding: 2rem;
-  border: 2px solid var(--brown);
   border-radius: 50px;
 
   background-color: var(--white);
@@ -101,7 +168,8 @@ const BookContainer = styled.div`
 
   @media screen and (min-width: 992px) {
     min-height: 640px;
-    height: 99%;
+    max-width: 500px;
+    margin: 0 auto;
   }
 
   & .alignCenter {
@@ -109,8 +177,9 @@ const BookContainer = styled.div`
   }
 
   h1 {
+    font-family: "Noto Sans", sans-serif;
     color: var(--brown);
-    margin: 0;
+    text-align: center;
     font-size: 1.6rem;
     @media screen and (min-width: 768px) {
       font-size: 2rem;
@@ -119,33 +188,70 @@ const BookContainer = styled.div`
 
   h2 {
     color: var(--main-color);
-    font-family: "Baloo 2", cursive;
-    margin: 0;
-    font-size: 1.6rem;
-    @media screen and (min-width: 768px) {
-      font-size: 2rem;
+    font-size: 1rem;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 500;
+    text-align: center;
+
+    @media screen and (min-width: 786px) {
+      font-size: 1.5rem;
     }
   }
-
-  span {
-    font-family: "Baloo 2", cursive;
-    color: var(--purple);
+  h3 {
+    color: var(--brown);
+    text-align: center;
   }
-  & .subjects {
-    font-family: "Baloo 2", cursive;
+  h4 {
+    color: var(--brown);
+  }
 
-    color: var(--light-brown);
+  & .subjects {
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 300;
 
     @media screen and (min-width: 768px) {
       padding-left: 2rem;
     }
   }
+
+  p {
+    margin: 0.2rem;
+    color: var(--light-brown);
+    font-size: 0.725rem;
+    padding-right: 8px;
+    @media screen and (min-width: 768px) {
+      font-size: 1rem;
+    }
+
+    &.light {
+      padding-right: 8px;
+      display: inline-flex;
+      color: #aaa69a;
+      font-weight: 600;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    span {
+      margin-right: 4px;
+
+      color: #aaa69a;
+    }
+  }
+  path {
+    stroke: #aaa69a;
+  }
 `;
 
-const Container = styled.div`
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+const Icon = styled.span`
+  color: #aaa69a;
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin: 0 0.4rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: var(--main-color);
+  }
 `;
 
 const DivCenter = styled.div`
@@ -158,31 +264,32 @@ const DivCenter = styled.div`
   }
 `;
 
-const DownloadContainer = styled.div`
+const BadgesContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   max-width: 420px;
+  margin: 0 auto;
   @media screen and (max-width: 768px) {
     flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  a {
-    background-color: var(--main-color);
-    padding: 0.6rem 1.8rem;
-    border: 2px solid var(--main-color);
-    border-radius: 50px;
-    color: var(--brown);
-    box-shadow: var(--shadow);
-    margin: 0.2rem;
-    align-self: center;
-
-    @media screen and (min-width: 769px) {
-      margin: 0.6rem;
-    }
   }
 `;
 
+const Badge = styled.a`
+  background-color: var(--main-light);
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--main-light);
+  border-radius: 50px;
+  color: var(--brown);
+  box-shadow: var(--shadow);
+  margin: 0.2rem;
+  align-self: center;
+  text-decoration: none;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background-color: var(--main-color);
+  }
+`;
 const ImgContainer = styled.div`
   width: 200px;
   height: auto;
@@ -197,6 +304,19 @@ const ImgContainer = styled.div`
     object-fit: cover;
     width: 100%;
     height: 100%;
+    border-radius: 20px;
+  }
+`;
+const Navigation = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1.2rem;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
+  color: var(--brown);
+  & div {
+    margin: 0.2rem;
   }
 `;
 
