@@ -4,16 +4,10 @@ import { TiHeartOutline } from "react-icons/ti";
 const Links = () => {
   return (
     <LinksContainer>
-      {/* <a className="start" href="/">
-        Start reading now!
-      </a> */}
-      <a href="/">
-        Add to fav
+      <button>
+        Add to Fav
         <TiHeartOutline />
-      </a>
-      {/* <a href="/" className="zip">
-        Download zip
-      </a> */}
+      </button>
     </LinksContainer>
   );
 };
@@ -21,43 +15,33 @@ const Links = () => {
 const LinksContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  margin: 2rem;
 
-  @media screen and (min-width: 560px) {
-    flex-direction: row;
-  }
-  a {
-    padding: 0.6rem;
-
-    background-color: var(--purple);
+  button {
+    padding: 0.2rem 2rem;
+    background-color: #9840e3;
     color: var(--white);
-    border-color: var(--purple);
+    border: 1px solid #9840e3;
     border-radius: 50px;
-    margin: 0.5rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-family: "Pacifico", cursive;
     box-shadow: var(--shadow);
-    width: 180px;
+    min-width: 120px;
     text-align: center;
-
+    text-decoration: none;
+    transition: all 0.5s ease;
     cursor: pointer;
 
     @media screen and (min-width: 992px) {
       margin: 0.5rem 0.5rem 1.5rem 0.5rem;
     }
-    /* 
-    &.start {
-      background-color: var(--main-color);
-      color: var(--brown);
-      border-color: var(--main-color);
-    }
 
-    &.zip {
-      background-color: var(--brown);
+    &:hover {
+      background-color: var(--purple);
       color: var(--white);
-      border-color: var(--brown);
-    } */
+      border: 1px solid var(--purple);
+    }
   }
 `;
 

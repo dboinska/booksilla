@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import styled, { css } from "styled-components/macro";
+import styled from "styled-components/macro";
 import StartPage from "../Account/StartPage";
 import bookCoverImg from "../../assets/book.png";
-import { TiHeartOutline } from "react-icons/ti";
+import { TiHeartOutline, TiZoom } from "react-icons/ti";
+import { BsDownload } from "react-icons/bs";
+import { GrLanguage, GrDocumentDownload } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 const SearchPage = () => {
-  let API_URL = `https://gutendex.com/books/`;
+  let API_URL = `https://gutendex.com/books`;
 
   const [searchBook, setSearchBook] = useState("");
   const onInputChange = (e) => {
@@ -17,18 +19,19 @@ const SearchPage = () => {
   const [books, setBooks] = useState([]);
 
   const fetchBooks = async () => {
-    const result = await axios.get(`${API_URL}${searchBook}`);
+    const searchURL = new URL(`?search=${searchBook}`, API_URL);
+    const result = await axios.get(searchURL);
     console.log(result.data.results);
 
     const filteredBooks = result.data.results.map((book) => {
-      const [{ name: authorName }] = book.authors; // const author = book.authors[0]
+      const [{ name: authorName }] = book.authors;
       const cover = book.formats["image/jpeg"];
       const fileHtml = book.formats["text/html"];
       const subjects = book.subjects
         .map((subject) => {
           return <ParagraphSubjects>{subject}</ParagraphSubjects>;
         })
-        .slice(0, 4);
+        .slice(0, 3);
       const downloads = book.download_count;
       const languages = book.languages;
       console.log(fileHtml);
@@ -58,131 +61,141 @@ const SearchPage = () => {
   const formLogin = (
     <SearchForm onSubmit={onSubmitHandler}>
       <label>
-        <span>Search for books</span>
         <input
           type="search"
-          placeholder="title or author"
+          placeholder="Search for book - title or author"
           value={searchBook}
           onChange={onInputChange}
         />
-        <div>
-          <button type="submit">Search</button>
-        </div>
+        <button type="submit">
+          <TiZoom />
+        </button>
       </label>
     </SearchForm>
   );
-  const theme = {
-    main: "auto",
-  };
 
-  const themeLinkPurple = {
-    mainBackground: "var(--purple)",
-    mainColor: "var(--white)",
-    mainBorder: "2px solid var(--purple);",
-  };
-
-  const themeLinkBrown = {
-    mainBackground: "var(--brown)",
-    mainColor: "var(--white)",
-    mainBorder: "2px solid var(--brown);",
-  };
-
-  const themeDivOrder1 = {
-    mainOrder: "1",
-    mainWidth: "110%",
-  };
-
-  const themeDivOrder2 = {
-    mainOrder: "2",
-  };
-
-  const themeDivOrder3 = {
-    mainOrder: "3",
-  };
   return (
-    <>
-      <StartPage
-        spanStyled=""
-        paragraph=""
-        action={actionLogin}
-        form={formLogin}
-        formGoogle=""
-        option=""
-        theme={theme}
-      />
+    <main>
+      <StartPage paragraph="" action={actionLogin} form={formLogin} />
       <UlStyled>
         {books.map((book) => {
           console.log(book);
           return (
             <LiStyled key={book.id}>
-              <Link to={`/book/${book.id}`}>
-                <LinkStyled>{book.title}</LinkStyled>
-              </Link>
-              <Grid>
-                <DivOrder theme={themeDivOrder1}>
-                  {(book.author && <h4>{book.author}</h4>) || (
-                    <h4>Author unknown</h4>
-                  )}
-                  <p>
-                    Language:
-                    <span className="secondColor">{book.languages}</span>
+              <ImgContainer>
+                {(book.cover && <img srcSet={book.cover} alt="" />) || (
+                  <img srcSet={bookCoverImg} alt="" />
+                )}
+              </ImgContainer>
+              <DivMax>
+                <div>
+                  <h2>
+                    <LinkStyled to={`/book/${book.id}`} title={book.title}>
+                      {book.title}
+                    </LinkStyled>
+                  </h2>
+                  {book.author && <h3>{book.author || `Author unknown`}</h3>}
+
+                  <p className="light">
+                    <span>
+                      <GrLanguage />
+                    </span>
+                    {book.languages}
                   </p>
-                  <p>
-                    Downloaded:
-                    <span className="secondColor">{book.downloads} times.</span>
+                  <p className="light">
+                    <span>
+                      <GrDocumentDownload />
+                    </span>
+                    {book.downloads} times
                   </p>
-                </DivOrder>
-                <DivOrder theme={themeDivOrder3}>
-                  <SubjectsContainer className="order-small-3">
-                    Main categories: <span>{book.subjects}</span>
-                  </SubjectsContainer>
-                </DivOrder>
-                <DivOrder theme={themeDivOrder2}>
-                  <ImgContainer>
-                    {(book.cover && <img srcSet={book.cover} alt="" />) || (
-                      <img srcSet={bookCoverImg} alt="" />
-                    )}
-                  </ImgContainer>
-                </DivOrder>
-              </Grid>
-              <LinksContainer>
-                <MyLink className="start" href={book.fileHtml}>
-                  Read now!
-                </MyLink>
-                <MyLink theme={themeLinkPurple} href="/">
-                  Add to fav
-                  <TiHeartOutline />
-                </MyLink>
-                <MyLink theme={themeLinkBrown} href="/">
-                  Download zip
-                </MyLink>
-              </LinksContainer>
+                  {book.subjects}
+                </div>
+
+                <div className="linksContainer">
+                  <ExternalLink className="start" href={book.fileHtml}>
+                    Read now!
+                  </ExternalLink>
+                  <ExternalLink brown href="/">
+                    <BsDownload />
+                  </ExternalLink>
+                </div>
+              </DivMax>
             </LiStyled>
           );
         })}
       </UlStyled>
-    </>
+    </main>
   );
 };
 
 export default SearchPage;
 
-const fontFamily = css`
-  font-family: "Pacifico", cursive;
-`;
-const DivOrder = styled.div`
-  @media screen and (max-width: 599px) {
-    order: ${(props) => props.theme.mainOrder};
-    width: ${(props) => props.theme.mainWidth};
+const DivMax = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0.4rem 1rem;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  div:first-of-type {
+    margin-bottom: 80px;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+  @media screen and (max-width: 576px) {
+    margin: 0 auto;
+  }
+  p {
+    margin: 0.2rem;
+    font-size: 0.725rem;
+    padding-right: 8px;
+    @media screen and (min-width: 768px) {
+      font-size: 1rem;
+    }
+
+    &.light {
+      padding-right: 8px;
+      display: inline-flex;
+      color: #aaa69a;
+      font-weight: 600;
+      align-items: center;
+    }
+    span {
+      margin-right: 4px;
+
+      color: #aaa69a;
+    }
+  }
+  path {
+    stroke: #aaa69a;
+  }
+
+  .linksContainer {
+    display: flex;
+    margin: 0.4rem 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    a {
+      margin: 0.2rem;
+      padding: 0.6rem;
+      /* min-width: 30px; */
+      font-size: 0.8rem;
+
+      @media screen and (min-width: 786px) {
+        font-size: 1rem;
+      }
+    }
   }
 `;
-
-DivOrder.defaultProps = {
-  theme: {
-    mainOrder: "1",
-    mainWidth: "auto",
-  },
-};
 
 const SearchForm = styled.form`
   label {
@@ -190,169 +203,167 @@ const SearchForm = styled.form`
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
-    ${fontFamily};
     flex-direction: column;
+    position: relative;
 
     @media screen and (min-width: 992px) {
       flex-direction: row;
     }
 
     input {
+      position: relative;
       padding: 0.6rem;
       border-radius: 50px;
       border: 2px solid var(--brown);
       width: 200px;
-      margin: 1rem;
+      width: 100%;
 
       @media screen and (min-width: 992px) {
         width: 400px;
       }
+      &::placeholder {
+        font-family: "Noto Sans", sans-serif;
+        color: var(--brown);
+      }
     }
     button[type="submit"] {
-      padding: 0.6rem;
-      border-radius: 50px;
-      background-color: var(--main-color);
-      border-color: var(--main-color);
-
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      border-radius: 0 50px 50px 0;
+      background-color: var(--main-light);
       font-family: "Pacifico", cursive;
       color: var(--brown);
       font-size: 1.2rem;
-      width: 100px;
       cursor: pointer;
+      border-right: 2px solid var(--brown);
+      border-top: 2px solid var(--brown);
+      border-bottom: 2px solid var(--brown);
+      border-left: none;
+      text-align: center;
+      width: 47px;
     }
-  }
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  grid-gap: 10px;
-
-  @media screen and (min-width: 510px) {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  }
-  @media screen and (min-width: 599px) {
-    & div {
-      margin: 0 auto;
-    }
-  }
-
-  @media screen and (min-width: 992px) {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    margin: 1rem 0;
   }
 `;
 
 const LiStyled = styled.li`
-  border: 2px solid var(--brown);
+  display: flex;
   background-color: var(--white);
   border-radius: 20px;
   padding: 1rem;
-  margin: 2rem;
   width: auto;
-  font-family: "Pacifico", cursive;
   list-style-type: none;
   box-shadow: var(--shadow);
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  margin-bottom: 1rem;
 
   @media screen and (min-width: 567px) {
     flex-direction: row;
     text-align: left;
   }
 
-  h4 {
+  h3 {
     color: var(--main-color);
-    margin: 1rem 0;
-    font-size: 1.4rem;
-    font-family: "Baloo 2", cursive;
+    margin: 0.2rem 0;
+    font-size: 1rem;
+    font-family: "Noto Sans", sans-serif;
     font-weight: 500;
+
+    @media screen and (min-width: 786px) {
+      font-size: 1.5rem;
+    }
   }
 
   span {
     color: var(--light-brown);
-    font-family: "Baloo 2", cursive;
+    font-family: "Noto Sans", sans-serif;
     font-weight: 500;
     font-size: 0.9rem;
-
-    &.secondColor {
-      padding: 0.4rem;
-      color: var(--purple);
-    }
+    font-weight: 600;
+    display: flex;
   }
 `;
 
 const ImgContainer = styled.div`
-  width: 100px;
-  height: 150px;
-  margin: 2rem 0 0 2rem;
+  display: flex;
+  width: 40%;
+  margin: 0;
 
-  @media screen and (min-width: 1200px) {
-    margin: 0 2rem 0 6rem;
-    width: 180px;
-    height: 260px;
-  }
   & img {
-    object-fit: cover;
+    object-fit: fill;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
+    @media screen and (max-width: 576px) {
+      max-height: 240px;
+    }
   }
 `;
-const LinkStyled = styled.h3`
+const LinkStyled = styled(Link)`
   color: var(--brown);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   margin: 0;
+  font-family: "Noto Sans", sans-serif;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  width: 100%;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (min-width: 786px) {
+    font-size: 2rem;
+  }
 `;
 
 const ParagraphSubjects = styled.p`
+  color: var(--light-brown);
   font-size: 0.9rem;
-  color: var(--brown);
-`;
-
-const SubjectsContainer = styled.div`
-  color: var(--black);
-  @media screen and (max-width: 509px) {
-    width: calc(100vw - 6rem);
-  }
-
-  @media screen and (min-width: 992px) {
-    margin-top: 2rem;
-  }
+  font-weight: 400;
 `;
 
 const UlStyled = styled.ul`
-  padding: 0;
+  padding: 1rem;
+  margin: 0;
 `;
 
-const LinksContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0;
-`;
-
-const MyLink = styled.a`
-  padding: 0.6rem 0.4rem;
-  background-color: ${(props) => props.theme.mainBackground};
-  color: ${(props) => props.theme.mainColor};
-  border: ${(props) => props.theme.mainBorder};
-  font-size: 0.8rem;
+const ExternalLink = styled.a`
+  padding: 0.4rem;
+  background-color: ${(props) =>
+    props.brown ? "var(--brown)" : "var(--main-color)"};
+  color: ${(props) => (props.brown ? "var(--white)" : "var(--brown)")};
+  border: ${(props) =>
+    props.brown ? "2px solid var(--brown)" : "2px solid var(--main-color)"};
+  font-size: 1rem;
   border-radius: 50px;
-  margin: 0.2rem;
-  font-family: "Pacifico", cursive;
   box-shadow: var(--shadow);
-  width: 180px;
   text-align: center;
   cursor: pointer;
+  /* min-width: 20px; */
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: ${(props) =>
+      props.brown ? "var(--light-brown)" : "var(--main-light)"};
+    color: ${(props) => (props.brown ? "var(--white)" : "var(--brown)")};
+    border: ${(props) =>
+      props.brown
+        ? "2px solid var(--light-brown)"
+        : "2px solid var(--main-light)"};
+  }
 
   @media screen and (min-width: 992px) {
     font-size: 1rem;
     margin: 0.5rem 0.5rem 1.5rem 0.5rem;
   }
 `;
-MyLink.defaultProps = {
-  theme: {
-    mainBackground: "var(--main-color)",
-    mainColor: "var(--brown)",
-    mainBorder: "2px solid var(--mainColor);",
-  },
-};

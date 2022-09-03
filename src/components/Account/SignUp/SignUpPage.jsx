@@ -3,8 +3,7 @@ import StartPage from "../StartPage";
 import pages from "../../../assets/page.png";
 
 const SignUpPage = () => {
-  const spanStyledLogin = "Hello,";
-  const paragraphLogin = "join us to start your reading adventure.";
+  const greetingMessage = "Hello,";
   const actionLogin = "Sign up!";
   const formLogin = (
     <LoginForm>
@@ -24,19 +23,12 @@ const SignUpPage = () => {
       </button>
     </LoginForm>
   );
-  const theme = {
-    main: "calc(100vh - 2.4rem)",
-  };
-  const img = <img className="pages" src={pages} width="200" alt="logo img" />;
+
   return (
     <StartPage
-      spanStyled={spanStyledLogin}
-      paragraph={paragraphLogin}
+      spanStyled={greetingMessage}
       action={actionLogin}
       form={formLogin}
-      formGoogle={formGoogleLogin}
-      theme={theme}
-      img={img}
     />
   );
 };

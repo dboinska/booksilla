@@ -5,6 +5,7 @@ import { createGlobalStyle } from "styled-components/macro";
 import LoginPage from "../Account/Login/LoginPage";
 import SearchPage from "../Pages/SearchPage";
 import SignUpPage from "../Account/SignUp/SignUpPage";
+import SingleBook from "../Pages/SingleBook";
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/book" element={<SearchPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<SearchPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/:id" element={<SingleBook />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
@@ -69,13 +71,12 @@ export const GlobalStyles = createGlobalStyle`
   hsl(60deg 17% 98%) 100%
 );
 
---shadow: 6px 6px 25px -12px rgba(66, 68, 90, 1);
+--shadow: 6px 6px 25px -12px #c0c1d7;
   }
   body {
         margin: 0;
         padding: 0;
-        
-        font-family: "Pacifico", cursive;
+        font-family: "Noto Sans", sans-serif;
         box-sizing: border-box;
         background-color: var(--white-gray);
     }
