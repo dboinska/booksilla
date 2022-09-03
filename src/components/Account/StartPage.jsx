@@ -1,7 +1,6 @@
 import styled from "styled-components/macro";
-
-const MEDIUM_UP = " @media screen and (min-width: 992px)";
-const SMALL_UP = " @media screen and (min-width: 768px)";
+import { MEDIUM_UP } from "../../constants";
+import { SMALL_UP } from "../../constants";
 
 const StartPage = ({ paragraph, action, form }) => {
   return (

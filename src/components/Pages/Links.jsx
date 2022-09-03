@@ -1,6 +1,8 @@
 import styled from "styled-components/macro";
 import { TiHeartOutline } from "react-icons/ti";
 
+import { MEDIUM_UP } from "../../constants";
+
 const Links = () => {
   return (
     <LinksContainer>
@@ -33,7 +35,7 @@ const LinksContainer = styled.div`
     transition: all 0.5s ease;
     cursor: pointer;
 
-    @media screen and (min-width: 992px) {
+    ${MEDIUM_UP} {
       margin: 0.5rem 0.5rem 1.5rem 0.5rem;
     }
 
