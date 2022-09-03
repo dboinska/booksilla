@@ -1,4 +1,7 @@
-import styled, { css } from "styled-components/macro";
+import styled from "styled-components/macro";
+
+const MEDIUM_UP = " @media screen and (min-width: 992px)";
+const SMALL_UP = " @media screen and (min-width: 768px)";
 
 const StartPage = ({ paragraph, action, form }) => {
   return (
@@ -17,10 +20,6 @@ const StartPage = ({ paragraph, action, form }) => {
   );
 };
 
-const fontSize = css`
-  font-size: 2.2rem;
-`;
-
 const SpanLogo = styled.div`
   font-size: 1.2rem;
   padding-top: 1.6rem;
@@ -38,14 +37,13 @@ const LoginContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  /* height: ${(props) => props.theme.main}; */
   overflow: hidden;
 `;
 
 const SpanStyledLight = styled.span`
-  ${fontSize};
+  font-size: 2.2rem;
   color: var(--main-color);
-  @media screen and (min-width: 768px) {
+  ${SMALL_UP} {
     font-size: 3rem;
   }
 `;
@@ -59,7 +57,7 @@ const Container = styled.div`
     bottom: 22px;
     right: 21px;
 
-    @media screen and (min-width: 992px) {
+    ${MEDIUM_UP} {
       bottom: 18px;
     }
   }
@@ -76,7 +74,7 @@ const Container = styled.div`
     color: var(--brown);
   }
 
-  @media screen and (min-width: 768px) {
+  ${SMALL_UP} {
     font-size: 1.2rem;
   }
 `;
@@ -87,7 +85,7 @@ const Paragraph = styled.p`
   text-align: left;
   margin: 0 auto;
 
-  @media screen and (min-width: 992px) {
+  ${MEDIUM_UP} {
     margin: 0;
     width: 100%;
     font-size: 1.4rem;

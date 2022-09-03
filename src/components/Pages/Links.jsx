@@ -4,16 +4,10 @@ import { TiHeartOutline } from "react-icons/ti";
 const Links = () => {
   return (
     <LinksContainer>
-      {/* <a className="start" href="/">
-        Start reading now!
-      </a> */}
       <button>
         Add to Fav
         <TiHeartOutline />
       </button>
-      {/* <a href="/" className="zip">
-        Download zip
-      </a> */}
     </LinksContainer>
   );
 };
@@ -21,13 +15,9 @@ const Links = () => {
 const LinksContainer = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   margin: 2rem;
-  /* 
-  @media screen and (min-width: 560px) {
-    flex-direction: row;
-  } */
+
   button {
     padding: 0.2rem 2rem;
     background-color: #9840e3;
@@ -52,18 +42,6 @@ const LinksContainer = styled.div`
       color: var(--white);
       border: 1px solid var(--purple);
     }
-    /* 
-    &.start {
-      background-color: var(--main-color);
-      color: var(--brown);
-      border-color: var(--main-color);
-    }
-
-    &.zip {
-      background-color: var(--brown);
-      color: var(--white);
-      border-color: var(--brown);
-    } */
   }
 `;
 

@@ -76,14 +76,7 @@ const SearchPage = () => {
 
   return (
     <main>
-      <StartPage
-        spanStyled=""
-        paragraph=""
-        action={actionLogin}
-        form={formLogin}
-        formGoogle=""
-        option=""
-      />
+      <StartPage paragraph="" action={actionLogin} form={formLogin} />
       <UlStyled>
         {books.map((book) => {
           console.log(book);
@@ -101,9 +94,7 @@ const SearchPage = () => {
                       {book.title}
                     </LinkStyled>
                   </h2>
-                  {(book.author && <h3>{book.author}</h3>) || (
-                    <h4>Author unknown</h4>
-                  )}
+                  {book.author && <h3>{book.author || `Author unknown`}</h3>}
 
                   <p className="light">
                     <span>

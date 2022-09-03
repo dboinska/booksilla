@@ -13,10 +13,10 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/book" element={<SearchPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<SearchPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="book/:id" element={<SingleBook />} />
+          <Route path="/:id" element={<SingleBook />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
@@ -71,7 +71,7 @@ export const GlobalStyles = createGlobalStyle`
   hsl(60deg 17% 98%) 100%
 );
 
---shadow: 6px 6px 25px -12px rgba(66, 68, 90, 1);
+--shadow: 6px 6px 25px -12px #c0c1d7;
   }
   body {
         margin: 0;
