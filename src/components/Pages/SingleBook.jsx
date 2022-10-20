@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components/macro";
-import { TiBookmark, TiChevronLeft } from "react-icons/ti";
+import { TiChevronLeft } from "react-icons/ti";
 import { IoBookmark, IoShareSocialSharp } from "react-icons/io5";
 
 import { GrLanguage, GrDocumentDownload } from "react-icons/gr";

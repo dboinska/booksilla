@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components/macro";
 import StartPage from "../Account/StartPage";
 import bookCoverImg from "../../assets/book.png";
-import { TiHeartOutline, TiZoom } from "react-icons/ti";
+import { TiZoom } from "react-icons/ti";
 import { BsDownload } from "react-icons/bs";
 import { GrLanguage, GrDocumentDownload } from "react-icons/gr";
 import { Link } from "react-router-dom";

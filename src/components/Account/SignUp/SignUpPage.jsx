@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components/macro";
 import StartPage from "../StartPage";
-import pages from "../../../assets/page.png";
 
 const SignUpPage = () => {
   const greetingMessage = "Hello,";
@@ -13,13 +12,6 @@ const SignUpPage = () => {
       <input type="password" name="password" />
       <button type="submit" value="Sign up">
         Sign in
-      </button>
-    </LoginForm>
-  );
-  const formGoogleLogin = (
-    <LoginForm>
-      <button type="submit" className="google" value="Sign in with Google">
-        Sign in with Google
       </button>
     </LoginForm>
   );
