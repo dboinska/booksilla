@@ -8,6 +8,9 @@ import { BsDownload } from "react-icons/bs";
 import { GrLanguage, GrDocumentDownload } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
+import { EXTRA_SMALL_DOWN, EXTRA_SMALL_UP, MEDIUM_UP } from "../../constants";
+import { SMALL_UP } from "../../constants";
+
 const SearchPage = () => {
   let API_URL = `https://gutendex.com/books`;
 
@@ -90,7 +93,7 @@ const SearchPage = () => {
               <DivMax>
                 <div>
                   <h2>
-                    <LinkStyled to={`/book/${book.id}`} title={book.title}>
+                    <LinkStyled to={`/${book.id}`} title={book.title}>
                       {book.title}
                     </LinkStyled>
                   </h2>
@@ -150,14 +153,14 @@ const DivMax = styled.div`
   a {
     text-decoration: none;
   }
-  @media screen and (max-width: 576px) {
+  ${EXTRA_SMALL_DOWN} {
     margin: 0 auto;
   }
   p {
     margin: 0.2rem;
     font-size: 0.725rem;
     padding-right: 8px;
-    @media screen and (min-width: 768px) {
+    ${SMALL_UP} {
       font-size: 1rem;
     }
 
@@ -187,10 +190,9 @@ const DivMax = styled.div`
     a {
       margin: 0.2rem;
       padding: 0.6rem;
-      /* min-width: 30px; */
       font-size: 0.8rem;
 
-      @media screen and (min-width: 786px) {
+      ${SMALL_UP} {
         font-size: 1rem;
       }
     }
@@ -206,7 +208,7 @@ const SearchForm = styled.form`
     flex-direction: column;
     position: relative;
 
-    @media screen and (min-width: 992px) {
+    ${MEDIUM_UP} {
       flex-direction: row;
     }
 
@@ -218,7 +220,7 @@ const SearchForm = styled.form`
       width: 200px;
       width: 100%;
 
-      @media screen and (min-width: 992px) {
+      ${MEDIUM_UP} {
         width: 400px;
       }
       &::placeholder {
@@ -259,7 +261,7 @@ const LiStyled = styled.li`
   margin-bottom: 0px;
   margin-bottom: 1rem;
 
-  @media screen and (min-width: 567px) {
+  ${EXTRA_SMALL_UP} {
     flex-direction: row;
     text-align: left;
   }
@@ -271,7 +273,7 @@ const LiStyled = styled.li`
     font-family: "Noto Sans", sans-serif;
     font-weight: 500;
 
-    @media screen and (min-width: 786px) {
+    ${SMALL_UP} {
       font-size: 1.5rem;
     }
   }
@@ -296,7 +298,8 @@ const ImgContainer = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    @media screen and (max-width: 576px) {
+    overflow: hidden;
+    ${EXTRA_SMALL_DOWN} {
       max-height: 240px;
     }
   }
@@ -319,7 +322,7 @@ const LinkStyled = styled(Link)`
     text-decoration: underline;
   }
 
-  @media screen and (min-width: 786px) {
+  ${SMALL_UP} {
     font-size: 2rem;
   }
 `;
@@ -347,7 +350,6 @@ const ExternalLink = styled.a`
   box-shadow: var(--shadow);
   text-align: center;
   cursor: pointer;
-  /* min-width: 20px; */
   text-decoration: none;
   margin-top: 1rem;
   transition: all 0.3s ease;
@@ -362,7 +364,7 @@ const ExternalLink = styled.a`
         : "2px solid var(--main-light)"};
   }
 
-  @media screen and (min-width: 992px) {
+  ${MEDIUM_UP} {
     font-size: 1rem;
     margin: 0.5rem 0.5rem 1.5rem 0.5rem;
   }

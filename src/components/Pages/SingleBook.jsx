@@ -7,6 +7,12 @@ import { IoBookmark, IoShareSocialSharp } from "react-icons/io5";
 
 import { GrLanguage, GrDocumentDownload } from "react-icons/gr";
 import Meta, { MetaGroup } from "../Meta";
+import {
+  MEDIUM_UP,
+  EXTRA_SMALL_UP,
+  SMALL_UP,
+  SMALL_DOWN,
+} from "../../constants";
 
 const SingleBook = () => {
   const API_URL = `https://gutendex.com/books/`;
@@ -138,7 +144,7 @@ const DivContainer = styled.div`
   text-align: center;
   margin: 0 auto;
 
-  @media screen and (min-width: 567px) {
+  ${EXTRA_SMALL_UP} {
     width: 50%;
   }
 `;
@@ -166,7 +172,7 @@ const BookContainer = styled.div`
   background-color: var(--white);
   box-shadow: var(--shadow);
 
-  @media screen and (min-width: 992px) {
+  ${MEDIUM_UP} {
     min-height: 640px;
     max-width: 500px;
     margin: 0 auto;
@@ -181,7 +187,7 @@ const BookContainer = styled.div`
     color: var(--brown);
     text-align: center;
     font-size: 1.6rem;
-    @media screen and (min-width: 768px) {
+    ${SMALL_UP} {
       font-size: 2rem;
     }
   }
@@ -193,7 +199,7 @@ const BookContainer = styled.div`
     font-weight: 500;
     text-align: center;
 
-    @media screen and (min-width: 786px) {
+    ${SMALL_UP} {
       font-size: 1.5rem;
     }
   }
@@ -209,7 +215,7 @@ const BookContainer = styled.div`
     font-family: "Noto Sans", sans-serif;
     font-weight: 300;
 
-    @media screen and (min-width: 768px) {
+    ${SMALL_UP} {
       padding-left: 2rem;
     }
   }
@@ -219,7 +225,7 @@ const BookContainer = styled.div`
     color: var(--light-brown);
     font-size: 0.725rem;
     padding-right: 8px;
-    @media screen and (min-width: 768px) {
+    ${SMALL_UP} {
       font-size: 1rem;
     }
 
@@ -258,7 +264,7 @@ const DivCenter = styled.div`
   display: flex;
   justify-content: center;
 
-  @media screen and (max-width: 768px) {
+  ${SMALL_DOWN} {
     margin-top: 1rem;
     flex-direction: column;
   }
@@ -269,7 +275,7 @@ const BadgesContainer = styled.div`
   justify-content: space-evenly;
   max-width: 420px;
   margin: 0 auto;
-  @media screen and (max-width: 768px) {
+  ${SMALL_DOWN} {
     flex-wrap: wrap;
   }
 `;
@@ -296,7 +302,7 @@ const ImgContainer = styled.div`
   margin: 0 auto;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  @media screen and (min-width: 768px) {
+  ${SMALL_UP} {
     width: 200px;
   }
 
